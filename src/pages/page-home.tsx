@@ -1,0 +1,8 @@
+
+export function PageHome(){
+    return (
+        <>
+        
+        </>
+    )
+}
