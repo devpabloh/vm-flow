@@ -1,2 +1,44 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+	--background-primary: #f8fafc;
+	--background-secondary: #ffffff;
+	--border-default: #e2e8f0;
+	--text-primary: #0f172a;
+	--text-secondary: #475569;
+	--action-primary: #2563eb;
+	--action-primary-hover: #1d4ed8;
+	--status-success: #059669;
+	--status-error: #dc2626;
+}
+
+.dark {
+	--background-primary: #020617;
+	--background-secondary: #0f172a;
+	--border-default: #1e293b;
+	--text-primary: #f1f5f9;
+	--text-secondary: #94a3b8;
+	--action-primary: #60a5fa;
+	--action-primary-hover: #93c5fd;
+	--status-success: #34d399;
+	--status-error: #f87171;
+}
+
+@theme inline {
+	--color-background-primary: var(--background-primary);
+	--color-background-secondary: var(--background-secondary);
+	--color-border-default: var(--border-default);
+	--color-text-primary: var(--text-primary);
+	--color-text-secondary: var(--text-secondary);
+	--color-action-primary: var(--action-primary);
+	--color-action-primary-hover: var(--action-primary-hover);
+	--color-status-success: var(--status-success);
+	--color-status-error: var(--status-error);
+}
+
+body {
+	background-color: var(--background-primary);
+	color: var(--text-primary);
+}
