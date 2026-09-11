@@ -1,12 +1,12 @@
 import { Outlet } from "react-router";
 import { MainContent } from "../../core-components/main-content";
-import { Header } from "../../core-components/header";
 import { Footer } from "../../core-components/footer";
+import { Sidebar } from "../../core-components/sidebar";
 
 export function LayoutMain(){
     return (
-        <div className="flex min-h-dvh flex-col">
-            <Header/>
+        <div className="flex min-h-dvh">
+            <Sidebar/>
             <MainContent>
                 <Outlet/>
             </MainContent>
