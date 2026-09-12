@@ -1,73 +1,98 @@
-import { cva, type VariantProps } from "class-variance-authority";
-import { Icon } from "./icon";
-import SpinnerIcon from '../assets/vite.svg?react'
-import { Skeleton } from "./skeleton";
+import { cva, type VariantProps } from 'class-variance-authority';
+import { Icon } from './icon';
+import SpinnerIcon from '../assets/vite.svg?react';
+import { Skeleton } from './skeleton';
 
-const buttonIconVariants = cva(`
+const buttonIconVariants = cva(
+  `
     inline-flex items-center justify-center cursor-pointer transition group
-    `,{
+    `,
+  {
     variants: {
-        variant: {
-            none: "",
-            primary: "bg-green-base hover:bg-green-dark",
-            secondary: "bg-gray-200 hover:bg-pink-base",
-            tertiary: "bg-transparent hover:bg-gray-200"
-        },
-        size: {
-            sm: "w-6 h-6 rounded"
-        },
-        disabled: {
-            true: "opacity-50 pointer-events-none"
-        },
-        handling: {
-            true: "pointer-events-none"
-        }
+      variant: {
+        none: '',
+        primary: 'bg-green-base hover:bg-green-dark',
+        secondary: 'bg-gray-200 hover:bg-pink-base',
+        tertiary: 'bg-transparent hover:bg-gray-200'
+      },
+      size: {
+        sm: 'w-6 h-6 rounded'
+      },
+      disabled: {
+        true: 'opacity-50 pointer-events-none'
+      },
+      handling: {
+        true: 'pointer-events-none'
+      }
     },
     defaultVariants: {
-        variant: "primary",
-        size: "sm",
-        disabled: false
+      variant: 'primary',
+      size: 'sm',
+      disabled: false
     }
-})
+  }
+);
 
-const buttonIconIconVariant = cva("transation", {
-    variants:{
-        variant: {
-            none: "",
-            primary: "fill-white",
-            secondary: "fill-pink-base group-hover:fill-white",
-            tertiary: "fill-gray-300 group-hover:fill-gray-400"
-        },
-        size: {
-            sm: "w-4 h-4"
-        }
+const buttonIconIconVariant = cva('transation', {
+  variants: {
+    variant: {
+      none: '',
+      primary: 'fill-white',
+      secondary: 'fill-pink-base group-hover:fill-white',
+      tertiary: 'fill-gray-300 group-hover:fill-gray-400'
     },
-    defaultVariants: {
-        variant: "secondary",
-        size: "sm"
+    size: {
+      sm: 'w-4 h-4'
     }
-})
+  },
+  defaultVariants: {
+    variant: 'secondary',
+    size: 'sm'
+  }
+});
 
-interface ButtonIcronProps extends VariantProps<typeof buttonIconVariants>, Omit<React.ComponentProps<"button">, "size" | "disabled">{
-    icon: React.ComponentProps<typeof Icon>["svg"];
-    loading?: boolean;
-    handling?: boolean;
+interface ButtonIcronProps
+  extends
+    VariantProps<typeof buttonIconVariants>,
+    Omit<React.ComponentProps<'button'>, 'size' | 'disabled'> {
+  icon: React.ComponentProps<typeof Icon>['svg'];
+  loading?: boolean;
+  handling?: boolean;
 }
 
-export function ButtonIcon({variant, size, disabled, className, icon,loading, handling, ...props}: ButtonIcronProps){
-
-    if(loading){
-        return <Skeleton rounded='lg' className={buttonIconVariants({
-                variant:"none",
-                size,
-                className,
-            })}
-        />
-    }
-
+export function ButtonIcon({
+  variant,
+  size,
+  disabled,
+  className,
+  icon,
+  loading,
+  handling,
+  ...props
+}: ButtonIcronProps) {
+  if (loading) {
     return (
-        <button {...props} className={buttonIconVariants({variant, size, disabled, className, handling})}>
-            <Icon svg={handling ? SpinnerIcon : icon} animate={handling} className={buttonIconIconVariant({variant, size})}/>
-        </button>
-    )
+      <Skeleton
+        rounded="lg"
+        className={buttonIconVariants({
+          variant: 'none',
+          size,
+          className
+        })}
+      />
+    );
+  }
+
+  return (
+    <button
+      {...props}
+      className={buttonIconVariants({ variant, size, disabled, className, handling })}
+    >
+      <Icon
+        svg={handling ? SpinnerIcon : icon}
+        animate={handling}
+        className={buttonIconIconVariant({ variant, size })}
+      />
+    </button>
+  );
 }

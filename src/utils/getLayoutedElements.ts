@@ -34,8 +34,8 @@ export const getLayoutedElements = (nodes: Node[], edges: Edge[], direction = 'T
         // O Dagre calcula o centro do nó, o React Flow usa o canto superior esquerdo,
         // por isso subtraímos metade da largura/altura
         x: nodeWithPosition.x - nodeWidth / 2,
-        y: nodeWithPosition.y - nodeHeight / 2,
-      },
+        y: nodeWithPosition.y - nodeHeight / 2
+      }
     };
     return newNode;
   });
