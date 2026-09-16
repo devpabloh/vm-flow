@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from 'class-variance-authority';
-import SpinnerIcon from '../assets/vite.svg?react';
+import SpinnerIcon from '../assets/spinner-loading.svg?react';
 import { Icon } from './icon';
 import { Text } from './text';
 

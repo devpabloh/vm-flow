@@ -75,7 +75,11 @@ const mockVMs: VirtualMachine[] = [
   { id: '8', name: 'worker-01', ip: '10.0.1.17', status: 'running', cpu: 7, memory: 21, disk: 28 }
 ];
 
-export function VMTable() {
+interface VMTableProps{
+  onEdit: (vm:VirtualMachine)=> void;
+}
+
+export function VMTable({onEdit}:VMTableProps) {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [editingVm, setEditingVm] = useState<VirtualMachine| null>(null)
@@ -97,10 +101,6 @@ export function VMTable() {
   }
 
   const isAllSelected = mockVMs.length > 0 && selectedIds.length === mockVMs.length;
-
-  function handleEdit(vm:VirtualMachine){
-    setEditingVm(vm)
-  }
 
   function handleCloseEditModal(){
     setEditingVm(null)
@@ -211,7 +211,7 @@ export function VMTable() {
                         type="button"
                         title="Editar"
                         className="hover:text-action-primary transition-colors cursor-pointer"
-                        onClick={() => handleEdit(vm)}
+                        onClick={() => onEdit(vm)}
                       >
                         <Pencil className="w-4 h-4" />
                       </button>
