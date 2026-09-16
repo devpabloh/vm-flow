@@ -1,44 +1,58 @@
 interface GaugeMeterProps {
   percentage: number;
   label: string;
-  strokeColor?: string; // Hex ou classe Tailwind
+  color?: string;
+  trackColor?: string;
 }
 
-export function GaugeMeter({ percentage, label, strokeColor = '#3b82f6' }: GaugeMeterProps) {
-  const radius = 38;
+export function GaugeMeter({
+  percentage,
+  label,
+  color = '#2563eb',
+  trackColor = '#e2e8f0'
+}: GaugeMeterProps) {
+  const size = 110;
+  const strokeWidth = 10;
+  const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (percentage / 100) * circumference;
+  const offset = circumference - (percentage / 100) * circumference;
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="relative w-24 h-24 flex items-center justify-center">
-        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
-          <circle
-            cx="50"
-            cy="50"
-            r={radius}
-            className="text-slate-100 dark:text-slate-800"
-            strokeWidth="8"
-            stroke="currentColor"
-            fill="transparent"
-          />
+    <div className="flex flex-col items-center gap-2">
+      {/* Label superior */}
+      <span className="text-xs font-semibold text-text-primary">{label}</span>
 
+      {/* Anel SVG */}
+      <div className="relative flex items-center justify-center">
+        <svg width={size} height={size} className="-rotate-90">
+          {/* Trilha de fundo */}
           <circle
-            cx="50"
-            cy="50"
+            cx={size / 2}
+            cy={size / 2}
             r={radius}
-            stroke={strokeColor}
-            strokeWidth="8"
+            stroke={trackColor}
+            strokeWidth={strokeWidth}
+            fill="transparent"
+            className="transition-all duration-500"
+          />
+          {/* Barra de progresso preenchida */}
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={radius}
+            stroke={color}
+            strokeWidth={strokeWidth}
             strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
+            strokeDashoffset={offset}
             strokeLinecap="round"
             fill="transparent"
-            className="transition-all duration-500 ease-out"
+            className="transition-all duration-700 ease-out"
           />
         </svg>
-        <span className="absolute text-sm font-bold text-brand-main">{percentage}%</span>
+
+        {/* Porcentagem central */}
+        <span className="absolute text-base font-bold text-text-primary">{percentage}%</span>
       </div>
-      <span className="mt-2 text-xs font-medium text-brand-muted">{label}</span>
     </div>
   );
 }

@@ -1,23 +1,17 @@
-import { StatusBadge } from '../components/StatusBadge';
-import { ResourceBar } from '../components/ResourceBar';
-import { GaugeMeter } from '../components/GaugeMeter';
-import { Button } from '../components/button';
-import { DefaultInput } from '../components/default-input';
+import { HeaderStart } from '../core-components/header-start';
+import { Metrics } from '../core-components/metrics';
+import { RecentActivities } from '../core-components/recent-activities';
+import { GeneralStatus } from '../core-components/general-status';
 
 export function PageHome() {
   return (
-    <>
-      <StatusBadge status="running" />
-      <StatusBadge status="stopped" />
-      <StatusBadge status="alert" />
-      <ResourceBar name="CPU" percentage={80} />
-      <ResourceBar name="RAM" percentage={60} />
-      <ResourceBar name="Disco" percentage={40} />
-      <GaugeMeter percentage={60} label="CPU" />
-      <GaugeMeter percentage={80} label="RAM" />
-      <GaugeMeter percentage={40} label="Disco" />
-      <Button>Primary</Button>
-      <DefaultInput />
-    </>
+    <div className="flex flex-col gap-3 p-4">
+      <HeaderStart />
+      <Metrics />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 items-stretch">
+        <RecentActivities />
+        <GeneralStatus />
+      </div>
+    </div>
   );
 }

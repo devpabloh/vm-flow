@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router';
 import { MainContent } from '../../core-components/main-content';
-import { Footer } from '../../core-components/footer';
 import { Sidebar } from '../../core-components/sidebar';
 
 export function LayoutMain() {
@@ -10,7 +9,6 @@ export function LayoutMain() {
       <MainContent>
         <Outlet />
       </MainContent>
-      <Footer />
     </div>
   );
 }
