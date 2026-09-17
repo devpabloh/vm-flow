@@ -1,4 +1,4 @@
-import { LayoutDashboard, Server, Activity, FileText, Settings, Info } from 'lucide-react';
+import { LayoutDashboard, Server, Activity, FileText, Settings } from 'lucide-react';
 import { NavLink } from 'react-router';
 import LogoAtlas from '../assets/logo_atlas_atlas.svg?react';
 import { useUser } from '../context/user-context';
@@ -15,7 +15,6 @@ export function Sidebar() {
     { label: 'Máquinas Virtuais', icon: Server, active: false, to: '/virtual-machines' },
     { label: 'Monitoramento', icon: Activity, active: false, to: '/monitoring' },
     { label: 'Relatórios', icon: FileText, active: false, to: '/reports' },
-    { label: 'Sobre', icon: Info, active: false, to: '/about' },
     { label: 'Configurações', icon: Settings, active: false, to: '/settings' }
   ];
 

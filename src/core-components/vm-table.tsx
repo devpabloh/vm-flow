@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import {EditVmModal} from './edit-vm-modal'
+import { EditVmModal } from './edit-vm-modal';
+import { type VirtualMachine, mockVMs } from '../types/topology';
 
 import {
   Eye,
@@ -12,82 +13,21 @@ import {
 import { Card } from '../components/card';
 import { Text } from '../components/text';
 
-// 1. Tipagem das Máquinas Virtuais
-export interface VirtualMachine {
-  id: string;
-  name: string;
-  ip: string;
-  status: 'running' | 'stopped';
-  cpu: number;
-  memory: number;
-  disk: number;
+interface VMTableProps {
+  vms?: VirtualMachine[];
+  onEdit: (vm: VirtualMachine) => void;
+  onViewTopology?: (vm: VirtualMachine) => void;
 }
 
-// 2. Dados fictícios baseados na imagem
-const mockVMs: VirtualMachine[] = [
-  {
-    id: '1',
-    name: 'web-server-01',
-    ip: '10.0.1.10',
-    status: 'running',
-    cpu: 12,
-    memory: 32,
-    disk: 45
-  },
-  {
-    id: '2',
-    name: 'api-gateway',
-    ip: '10.0.1.11',
-    status: 'running',
-    cpu: 28,
-    memory: 56,
-    disk: 62
-  },
-  {
-    id: '3',
-    name: 'db-server-01',
-    ip: '10.0.1.12',
-    status: 'running',
-    cpu: 41,
-    memory: 78,
-    disk: 71
-  },
-  {
-    id: '4',
-    name: 'cache-redis',
-    ip: '10.0.1.13',
-    status: 'running',
-    cpu: 8,
-    memory: 24,
-    disk: 33
-  },
-  { id: '5', name: 'storage-01', ip: '10.0.1.14', status: 'stopped', cpu: 0, memory: 0, disk: 12 },
-  {
-    id: '6',
-    name: 'monitoring',
-    ip: '10.0.1.15',
-    status: 'running',
-    cpu: 19,
-    memory: 43,
-    disk: 50
-  },
-  { id: '7', name: 'frontend', ip: '10.0.1.16', status: 'running', cpu: 16, memory: 37, disk: 41 },
-  { id: '8', name: 'worker-01', ip: '10.0.1.17', status: 'running', cpu: 7, memory: 21, disk: 28 }
-];
-
-interface VMTableProps{
-  onEdit: (vm:VirtualMachine)=> void;
-}
-
-export function VMTable({onEdit}:VMTableProps) {
+export function VMTable({ onEdit, onViewTopology, vms = mockVMs }: VMTableProps) {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [editingVm, setEditingVm] = useState<VirtualMachine| null>(null)
+  const [editingVm, setEditingVm] = useState<VirtualMachine | null>(null);
 
   // Selecionar todos os checkboxes
   function handleSelectAll(checked: boolean) {
     if (checked) {
-      setSelectedIds(mockVMs.map((vm) => vm.id));
+      setSelectedIds(vms.map((vm) => vm.id));
     } else {
       setSelectedIds([]);
     }
@@ -100,10 +40,10 @@ export function VMTable({onEdit}:VMTableProps) {
     );
   }
 
-  const isAllSelected = mockVMs.length > 0 && selectedIds.length === mockVMs.length;
+  const isAllSelected = vms.length > 0 && selectedIds.length === vms.length;
 
-  function handleCloseEditModal(){
-    setEditingVm(null)
+  function handleCloseEditModal() {
+    setEditingVm(null);
   }
 
   return (
@@ -137,8 +77,8 @@ export function VMTable({onEdit}:VMTableProps) {
           </thead>
 
           {/* Linhas da Tabela */}
-          <tbody className="divide-y divide-border-default/60 text-sm">
-            {mockVMs.map((vm) => {
+          <tbody className="divide-y border-border-default/60 text-sm">
+            {vms.map((vm) => {
               const isChecked = selectedIds.includes(vm.id);
               const isRunning = vm.status === 'running';
 
@@ -202,8 +142,9 @@ export function VMTable({onEdit}:VMTableProps) {
                     <div className="flex items-center justify-center gap-3 text-text-secondary">
                       <button
                         type="button"
-                        title="Visualizar"
+                        title="Visualizar Topologia"
                         className="hover:text-action-primary transition-colors cursor-pointer"
+                        onClick={() => onViewTopology?.(vm)}
                       >
                         <Eye className="w-4 h-4" />
                       </button>
@@ -236,7 +177,7 @@ export function VMTable({onEdit}:VMTableProps) {
 
       <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 border-t border-border-default">
         <Text as="span" variant="caption" className="text-xs text-text-secondary">
-          Mostrando 8 de 12 VMs
+          Mostrando {vms.length} VMs
         </Text>
 
         <div className="flex items-center gap-1.5">
@@ -289,10 +230,11 @@ export function VMTable({onEdit}:VMTableProps) {
       {editingVm && (
         <EditVmModal
           vm={editingVm}
+          availableVms={vms}
           onClose={handleCloseEditModal}
-          onSave={(updatedVm)=>{
-            console.log("dados atualizados", updatedVm)
-            handleCloseEditModal()
+          onSave={(updatedVm) => {
+            console.log('dados atualizados', updatedVm);
+            handleCloseEditModal();
           }}
         />
       )}
