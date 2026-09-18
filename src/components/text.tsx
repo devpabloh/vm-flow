@@ -1,7 +1,7 @@
 import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
 
-export const textVariants = cva('text-text-primary transition-colors', {
+const textVariants = cva('text-text-primary transition-colors', {
   variants: {
     variant: {
       // Títulos (Headings)
@@ -55,7 +55,6 @@ interface TextProps extends React.HTMLAttributes<HTMLElement>, VariantProps<type
 }
 
 export function Text({ as, variant = 'body-md', className, children, ...props }: TextProps) {
-  // Se o usuário não passou 'as' explicitamente, usa a tag semântica padrão da variante ou 'span'
   const Component = as || (variant ? defaultElementMap[variant] : undefined) || 'span';
 
   return React.createElement(

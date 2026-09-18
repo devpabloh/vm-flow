@@ -46,7 +46,7 @@ const buttonIconVariants = cva('transition', {
   variants: {
     variant: {
       primary: 'fill-pink-base',
-      link: 'text-action-primary group-hover:text-action-primary-hover' // ✅ Adicionado
+      link: 'text-action-primary group-hover:text-action-primary-hover'
     },
     size: {
       md: 'w-5 h-5',
