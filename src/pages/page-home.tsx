@@ -1,6 +1,6 @@
 import { Text } from "../components/text";
 import { Button } from "../components/button";
-import {Plus} from 'lucide-react'
+import {Plus, ChartColumnDecreasing} from 'lucide-react'
 import { Card } from "../components/card";
 
 const recursosPrincipais = [
@@ -32,7 +32,7 @@ export function PageHome() {
         <Text as="h2" variant="h2">Visibilidade e controle da sua infraestrutura de forma visual</Text>
         <Text as="h3" variant="h3">Gerencie e monitore suas máquinas virtuais. Mapeie dependências, otimize recursos e tome decisões baseadas em dados com o nosso painel inteligente.</Text>
         <div className="flex gap-4">
-          <Button>Acessar Dashboard</Button>
+          <Button icon={ChartColumnDecreasing}>Acessar Dashboard</Button>
           <Button icon={Plus}>Máquina Virtual</Button>
         </div>
       </section>
