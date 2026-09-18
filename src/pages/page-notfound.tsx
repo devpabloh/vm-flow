@@ -1,7 +1,7 @@
 import { Text } from "../components/text";
 import { Button } from "../components/button";
 import { Link } from "react-router";
-import virtualMachine from "../assets/virtual-machine.png";
+import virtualMachine from "../assets/virtual-machine-notfound.png";
 import { ArrowLeft } from "lucide-react";
 
 export function PageNotfound() {
@@ -18,10 +18,10 @@ export function PageNotfound() {
         </Text>
 
         <div className="flex items-center justify-between gap-4">
-          <Link to="/">
-            <Button icon={ArrowLeft}>Voltar para o Início</Button>
+          <Link to="/" >
+            <Button icon={ArrowLeft} className="hover:bg-red-500 transition-colors duration-300">Voltar para o Início</Button>
           </Link>
-          <Link to="/virtual-machines" className="text-action-primary border-none bg-transparent">
+          <Link to="/virtual-machines" className="text-action-primary border-none bg-transparent hover:text-red-500 transition-colors duration-300">
             Voltar para o Login
           </Link>
         </div>
