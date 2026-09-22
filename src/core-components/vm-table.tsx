@@ -3,8 +3,8 @@ import { EditVmModal } from './edit-vm-modal';
 import { type VirtualMachine, mockVMs } from '../types/topology';
 
 import {
-  Eye,
   Pencil,
+  Trash2,
   MoreHorizontal,
   ChevronLeft,
   ChevronRight,
@@ -16,10 +16,10 @@ import { Text } from '../components/text';
 interface VMTableProps {
   vms?: VirtualMachine[];
   onEdit: (vm: VirtualMachine) => void;
-  onViewTopology?: (vm: VirtualMachine) => void;
+  onDelete: (vm: VirtualMachine) => void;
 }
 
-export function VMTable({ onEdit, onViewTopology, vms = mockVMs }: VMTableProps) {
+export function VMTable({ onEdit, onDelete, vms = mockVMs }: VMTableProps) {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [editingVm, setEditingVm] = useState<VirtualMachine | null>(null);
@@ -143,14 +143,14 @@ export function VMTable({ onEdit, onViewTopology, vms = mockVMs }: VMTableProps)
                       <button
                         type="button"
                         title="Visualizar Topologia"
-                        className="hover:text-action-primary transition-colors cursor-pointer"
-                        onClick={() => onViewTopology?.(vm)}
+                        className="hover:text-red-400 transition-colors cursor-pointer"
+                        onClick={() => onDelete?.(vm)}
                       >
-                        <Eye className="w-4 h-4" />
+                        <Trash2 className="w-4 h-4" />
                       </button>
                       <button
                         type="button"
-                        title="Editar"
+                        title="Excluir VM"
                         className="hover:text-action-primary transition-colors cursor-pointer"
                         onClick={() => onEdit(vm)}
                       >

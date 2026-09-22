@@ -1,6 +1,13 @@
 export type ServiceType = 'redis' | 'database' | 'api' | 'custom';
 export type VmStatus = 'running' | 'stopped' | 'error' | 'maintenance';
 
+export interface Application {
+  id: string;
+  name: string;
+  description?: string;
+  vms: VirtualMachine[];
+}
+
 export interface ServiceItem {
   id: string;
   name: string;
@@ -106,3 +113,18 @@ export const mockVMs: VirtualMachine[] = [
   { id: '7', name: 'frontend', ip: '10.0.1.16', status: 'running', cpu: 16, memory: 37, disk: 41 },
   { id: '8', name: 'worker-01', ip: '10.0.1.17', status: 'running', cpu: 7, memory: 21, disk: 28 }
 ];
+
+export const mockApplications: Application[] = [
+   {
+    id: 'app-1',
+    name: 'E-commerce Core',
+    description: 'Microsserviços de catálogo, carrinho e checkout',
+    vms: mockVMs.slice(0, 3)
+  },
+  {
+    id: 'app-2',
+    name: 'Data & Analytics',
+    description: 'Pipelines e banco de dados analítico',
+    vms: mockVMs.slice(3, 6)
+  }
+]

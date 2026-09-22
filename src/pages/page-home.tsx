@@ -32,8 +32,8 @@ export function PageHome() {
         <Text as="h2" variant="h2">Visibilidade e controle da sua infraestrutura de forma visual</Text>
         <Text as="h3" variant="h3">Gerencie e monitore suas máquinas virtuais. Mapeie dependências, otimize recursos e tome decisões baseadas em dados com o nosso painel inteligente.</Text>
         <div className="flex gap-4">
-          <Button icon={ChartColumnDecreasing}>Acessar Dashboard</Button>
-          <Button icon={Plus}>Máquina Virtual</Button>
+          <Button icon={ChartColumnDecreasing} className="text-white">Acessar Dashboard</Button>
+          <Button icon={Plus} className="text-white">Máquina Virtual</Button>
         </div>
       </section>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">

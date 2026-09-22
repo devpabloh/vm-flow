@@ -1,12 +1,7 @@
-import { Button } from '../components/button';
+
 import { Text } from '../components/text';
-import { Plus } from 'lucide-react';
 
-interface HeaderMonitoringProps{
-  onNewVm: () => void;
-}
-
-export function HeaderMonitoring({onNewVm}:HeaderMonitoringProps) {
+export function HeaderMonitoring() {
   return (
     <header className="p-4 flex items-center justify-between">
       <div>
@@ -17,9 +12,6 @@ export function HeaderMonitoring({onNewVm}:HeaderMonitoringProps) {
           Gerencie e visualize suas máquinas virtuais
         </Text>
       </div>
-      <Button icon={Plus} className="text-white" onClick={onNewVm}>
-        Virtual Machine
-      </Button>
     </header>
   );
 }
