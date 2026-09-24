@@ -7,7 +7,7 @@ const themeSettings = [
     id: 'dark',
     label: 'Escuro',
     icon: Moon,
-    desc: 'Ideal para ambientes com pouca luz'
+    desc: 'Ideal para ambientes com pouca luz.'
   },
   {
     id: 'system',
