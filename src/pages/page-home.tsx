@@ -21,6 +21,12 @@ const recursosPrincipais = [
     titulo: "Monitoramento de Saúde em Tempo Real",
     conteudo: "Acompanhe métricas vitais como uso de CPU, consumo de memória e I/O de disco.",
     conteudoSecondy: "Identifique gargalos antes que eles impactem a disponibilidade dos seus serviços."
+  },
+  {
+    id: 'alertas-inteligentes',
+    titulo: "Alertas Inteligentes",
+    conteudo: "Configure noticações personalizadas para anomalias na rede ou picos de processamento.",
+    conteudoSecondy: "Seja avisado instataneamente no Slack ou e-mail quando uma VM precisar de atenção."
   }
 ]
 
