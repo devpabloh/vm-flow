@@ -84,10 +84,7 @@ export function PageVirtualMachines() {
 
   return (
     <div className="flex flex-col gap-4">
-      <HeaderMonitoring onNewVm={() => {
-        // Se houver aplicações, pode abrir para a primeira ou abrir um modal de selecionar app
-        if (applications.length > 0) handleOpenCreateVm(applications[0].id);
-      }} />
+      <HeaderMonitoring />
 
       <main className="p-4 pt-0 flex flex-col gap-6">
         {applications.map((app) => (
