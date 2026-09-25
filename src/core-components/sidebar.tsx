@@ -1,14 +1,18 @@
-import { LayoutDashboard, Server, Activity, FileText, Settings, ChevronRight, ChevronLeft } from 'lucide-react';
+import {useMsal} from '@azure/msal-react';
+import { LayoutDashboard, Server, Activity, FileText, Settings, ChevronRight, ChevronLeft, LogOut } from 'lucide-react';
 import { NavLink } from 'react-router';
 import LogoAtlas from '../assets/logo_atlas_atlas.svg?react';
 import { useUser } from '../context/user-context';
 import { useState } from 'react';
+import { ButtonIcon } from '../components/button-icon';
 
 export function Sidebar() {
   const { user, loading } = useUser();
   const [isCollapsed, setIsCollapsed] = useState(()=>{
     return localStorage.getItem('sidebar_collapsed') === 'true';
   });
+
+  const {instance} = useMsal();
 
   function toggleSidebar(){
     setIsCollapsed((prev)=> {
@@ -84,13 +88,16 @@ export function Sidebar() {
             {user?.initials || '??'}
           </div>
           {!isCollapsed && (
-            <div className="flex flex-col truncate">
-              <span className="text-xs font-semibold text-white truncate">
+            <div className="flex items-center justify-between w-full truncate">
+              <div className='flex flex-col w-full truncate'>
+                <span className="text-xs font-semibold text-white truncate">
                 {user?.name}
               </span>
               <span className="text-[10px] text-slate-400 truncate">
                 {user?.role}
               </span>
+              </div>
+              <ButtonIcon icon={LogOut} variant='none' onClick={()=>instance.logoutRedirect()}/>
             </div>
           )}
         </div>

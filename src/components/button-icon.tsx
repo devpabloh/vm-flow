@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Icon } from './icon';
-import SpinnerIcon from '../assets/vite.svg?react';
+import SpinnerIcon from '../assets/spinner-loading.svg?react';
 import { Skeleton } from './skeleton';
 
 const buttonIconVariants = cva(

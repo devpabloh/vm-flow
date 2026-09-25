@@ -7,6 +7,7 @@ import { PageSettings } from './pages/page-settings';
 import { UserProvider } from './context/user-context';
 import { PageMonitoring } from './pages/page-monitoring';
 import { PageVirtualMachines } from './pages/page-virtual-machines';
+import { PageLogin } from './pages/page-login';
 
 function App() {
   return (
@@ -14,8 +15,9 @@ function App() {
       <UserProvider>
         <BrowserRouter>
           <Routes>
+            <Route path="/" element={<PageLogin />} />
             <Route element={<LayoutMain />}>
-              <Route path="/" element={<PageHome />} />
+              <Route path="/home" element={<PageHome />} />
               <Route path="/virtual-machines" element={<PageVirtualMachines />} />
               <Route path="/monitoring" element={<PageMonitoring />} />
               <Route path="/settings" element={<PageSettings />} />
