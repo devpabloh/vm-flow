@@ -3,7 +3,7 @@ import { Text } from '../components/text';
 
 export function HeaderMonitoring() {
   return (
-    <header className="p-4 flex items-center justify-between">
+    <header className="px-8 py-6 flex items-center justify-between">
       <div>
         <Text as="h2" variant="h2">
           Monitoramento

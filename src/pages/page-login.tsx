@@ -15,11 +15,11 @@ export function PageLogin() {
 
     if(inProgress !== InteractionStatus.None) return <Skeleton/>
 
-    if(isAuthenticated) return <Navigate to="/home" replace/>
+    if(isAuthenticated) return <Navigate to="/" replace/>
 
     return (
         <main className="flex flex-col h-screen w-full justify-center items-center">
-            <div className="h-96 w-1/2 flex flex-col items-center justify-center  md:grid md:grid-cols-2 flex bg-slate-800 rounded-lg shadow-lg border border-slate-600">
+            <div className="h-96 w-1/2 flex flex-col items-center justify-center  md:grid md:grid-cols-2 bg-slate-800 rounded-lg shadow-lg border border-slate-600">
                 <div className="flex justify-center items-center border-r-2 border-slate-600">
                     <Atlas className="h-32"/>
                 </div>

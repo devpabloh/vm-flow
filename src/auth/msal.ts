@@ -1,4 +1,4 @@
-import {PublicClientApplication, type Configuration} from '@azure/msal-browser';
+import {PublicClientApplication, EventType, type AuthenticationResult, type Configuration} from '@azure/msal-browser';
 
 const config: Configuration = {
     auth: {
@@ -11,5 +11,11 @@ const config: Configuration = {
 }
 
 export const msalInstance = new PublicClientApplication(config);
+
+msalInstance.addEventCallback((event)=> {
+    if(event.eventType === EventType.LOGIN_SUCCESS && event.payload){
+        msalInstance.setActiveAccount((event.payload as AuthenticationResult).account)
+    }
+})
 
 export const loginRequest = {scopes: ['User.Read']}
