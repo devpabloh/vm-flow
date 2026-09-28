@@ -1,10 +1,19 @@
 import { createContext, useState, useContext, useEffect } from 'react';
+import { useMsal } from '@azure/msal-react';
+import { InteractionStatus } from '@azure/msal-browser';
+import { getMe, getMyPhoto } from '../auth/graph';
 
 export interface User {
+  id: string;
   name: string;
+  givenName?: string;
   email: string;
   role: string;
+  roles: string[];
+  jobTitle?: string;
+  department?: string;
   initials: string;
+  photo?: string;
 }
 
 interface UserContextType {
@@ -24,31 +33,64 @@ export function getInitials(name: string): string {
 }
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
+  const {instance, accounts, inProgress} = useMsal();
+  const account = instance.getActiveAccount() ?? accounts[0];
+  const accountId = account?.homeAccountId;
+
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchCurrentUser() {
-      try {
-        // const response = await fetch('/api/me');
-        // const data = await response.json();
-
-        const fetchName = 'Pablo Henrique';
-
-        setUser({
-          name: fetchName,
-          email: 'pablo@empresa.com',
-          role: 'Administrador',
-          initials: getInitials(fetchName)
-        });
-      } catch (error) {
-        console.error('Erro ao carregar usuário', error);
-      } finally {
-        setLoading(false);
-      }
+    if (inProgress !== InteractionStatus.None) return;
+    if (!account) {
+      setUser(null);
+      setLoading(false);
+      return;
     }
-    fetchCurrentUser();
-  }, []);
+
+    const roles = (account.idTokenClaims?.roles as string[] | undefined) ?? [];
+    const fromClaims = {
+      id: account.localAccountId,
+      name: account.name ?? '',
+      email: account.username,
+      role: roles[0] ?? '',
+      roles
+    };
+    let cancelled = false;
+
+    Promise.all([
+      getMe(instance, account),
+      
+      getMyPhoto(instance, account).catch(() => null)
+    ])
+      .then(([me, photo]) => {
+        if (cancelled) return;
+        const name = me.displayName ?? fromClaims.name;
+        setUser({
+          ...fromClaims,
+          name,
+          givenName: me.givenName,
+          email: me.mail ?? me.userPrincipalName ?? fromClaims.email,
+          jobTitle: me.jobTitle,
+          department: me.department,
+          initials: getInitials(name),
+          photo: photo ?? undefined
+        });
+      })
+      .catch((error) => {
+        console.error('Erro ao carregar usuário', error);
+        
+        if (!cancelled) setUser({ ...fromClaims, initials: getInitials(fromClaims.name) });
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+    
+  }, [instance, accountId, inProgress]);
 
   return <UserContext.Provider value={{ user, loading, setUser }}>{children}</UserContext.Provider>;
 }

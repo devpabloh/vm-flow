@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { ConfigNotifications } from '../core-components/config-notifications';
 import { DefaultsVirtualMachines } from '../core-components/defaults-virtual-machines';
-import { KeysSsh } from '../core-components/keys-ssh';
+/* import { KeysSsh } from '../core-components/keys-ssh'; */
 import { TeamDashboard } from '../core-components/team-dashboard';
-import { Palette, User, Key, Cpu, Bell, Check, Save } from 'lucide-react';
+import { Palette, User, Cpu, Bell, Check, Save } from 'lucide-react';
 import { ConfigTheme } from '../core-components/config-theme';
 
 type TabType = 'profile' | 'appearance' | 'ssh' | 'defaults' | 'notifications';
@@ -11,7 +11,7 @@ type TabType = 'profile' | 'appearance' | 'ssh' | 'defaults' | 'notifications';
 const menuTabs = [
   { id: 'appearance', label: 'Aparência & Tema', icon: Palette },
   { id: 'profile', label: 'Perfil & Equipe', icon: User },
-  { id: 'ssh', label: 'Chaves SSH', icon: Key },
+  /* { id: 'ssh', label: 'Chaves SSH', icon: Key }, */
   { id: 'defaults', label: 'Padrões de VM', icon: Cpu },
   { id: 'notifications', label: 'Notificações', icon: Bell }
 ];
@@ -19,6 +19,7 @@ const menuTabs = [
 export function PageSettings() {
   const [activeTab, setActiveTab] = useState<TabType>('appearance');
   const [savedSuccess, setSavedSuccess] = useState(false);
+  
 
   const handleSave = (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -71,7 +72,7 @@ export function PageSettings() {
         {/* TAB 2: PERFIL E EQUIPE */}
         {activeTab === 'profile' && <TeamDashboard />}
         {/* TAB 3: CHAVES SSH */}
-        {activeTab === 'ssh' && <KeysSsh />}
+        {/* {activeTab === 'ssh' && <KeysSsh />} */}
         {/* TAB 4: PADRÕES DE VM */}
         {activeTab === 'defaults' && <DefaultsVirtualMachines />}
         {/* TAB 5: NOTIFICAÇÕES */}

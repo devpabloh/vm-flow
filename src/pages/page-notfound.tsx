@@ -3,8 +3,11 @@ import { Button } from "../components/button";
 import { Link } from "react-router";
 import virtualMachine from "../assets/virtual-machine-notfound.png";
 import { ArrowLeft } from "lucide-react";
+import { useIsAuthenticated } from "@azure/msal-react";
 
 export function PageNotfound() {
+  const isAuthenticated = useIsAuthenticated();
+
   return (
     <section className="flex flex-col md:flex-row items-center justify-center min-h-screen w-full p-8 gap-8 max-w-6xl mx-auto">
       <div className="flex flex-col items-start gap-4 max-w-md">
@@ -21,9 +24,11 @@ export function PageNotfound() {
           <Link to="/" >
             <Button icon={ArrowLeft} className="hover:bg-red-500 transition-colors duration-300">Voltar para o Início</Button>
           </Link>
-          <Link to="/virtual-machines" className="text-action-primary border-none bg-transparent hover:text-red-500 transition-colors duration-300">
-            Voltar para o Login
-          </Link>
+          {!isAuthenticated && (
+            <Link to="/login" className="text-action-primary border-none bg-transparent hover:text-red-500 transition-colors duration-300">
+              Ir para o Login
+            </Link>
+          )}
         </div>
       </div>
 

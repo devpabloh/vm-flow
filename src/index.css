@@ -13,6 +13,7 @@
   --action-primary-hover: #1d4ed8;
   --status-success: #059669;
   --status-error: #dc2626;
+  --status-warning: #d97706;
 }
 
 .dark {
@@ -26,6 +27,7 @@
   --action-primary-hover: #4594f0;
   --status-success: #34d399;
   --status-error: #f87171;
+  --status-warning: #fbbf24;
 }
 
 @theme inline {
@@ -39,6 +41,7 @@
   --color-action-primary-hover: var(--action-primary-hover);
   --color-status-success: var(--status-success);
   --color-status-error: var(--status-error);
+  --color-status-warning: var(--status-warning);
 }
 
 body {

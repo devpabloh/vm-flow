@@ -1,7 +1,13 @@
+import { useIsAuthenticated } from "@azure/msal-react";
+import {useRoles} from "../auth/use-roles";
+import { ROLES } from "../auth/roles";
+import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
 import { Text } from "../components/text";
 import { Button } from "../components/button";
 import {Plus, ChartColumnDecreasing} from 'lucide-react'
 import { Card } from "../components/card";
+import { Alert } from "../components/alert";
 
 const recursosPrincipais = [
   {
@@ -32,14 +38,75 @@ const recursosPrincipais = [
 
 
 export function PageHome() {
+  const [noAccess, setNoAccess] = useState<'dashboard' | 'virtual-machine' | null>(null);
+  const navigate = useNavigate();
+  const isAuthenticated = useIsAuthenticated();
+  const {hasRole} = useRoles();
+  const isAdmin = hasRole(ROLES.admin);
+
+  const TIME_ALERT_MESSAGE = 4000
+
+  function handleAcessDashboard(){
+    if(!isAuthenticated){
+      navigate('/login');
+      return;
+    }
+
+    if(isAdmin){
+      navigate('/monitoring')
+      return;
+    }
+
+    setNoAccess('dashboard');
+  }
+
+  function handleVirtualMachine(){
+    if(!isAuthenticated){
+      navigate('/login');
+      return;
+    }
+
+    if(isAdmin){
+      navigate('/virtual-machines')
+      return;
+    }
+
+    setNoAccess('virtual-machine');
+  }
+
+  useEffect(()=>{
+    if(!noAccess) return;
+    const timer = setTimeout(()=> setNoAccess(null), TIME_ALERT_MESSAGE)
+
+    return ()=> clearTimeout(timer)
+  },[noAccess])
+
   return (
     <div className="flex flex-col gap-8 md:gap-16 p-8">
       <section className="flex flex-col gap-4">
         <Text as="h2" variant="h2">Visibilidade e controle da sua infraestrutura de forma visual</Text>
         <Text as="h3" variant="h3">Gerencie e monitore suas máquinas virtuais. Mapeie dependências, otimize recursos e tome decisões baseadas em dados com o nosso painel inteligente.</Text>
         <div className="flex gap-4">
-          <Button icon={ChartColumnDecreasing} className="text-white">Acessar Dashboard</Button>
-          <Button icon={Plus} className="text-white">Máquina Virtual</Button>
+          <Button 
+            icon={ChartColumnDecreasing} 
+            className="text-white"
+            onClick={handleAcessDashboard}
+          >
+            Acessar Dashboard
+          </Button>
+          <Button
+            icon={Plus}
+            className="text-white"
+            onClick={handleVirtualMachine}
+          >
+            Máquina Virtual
+          </Button>
+          {noAccess === 'dashboard' &&  (
+            <Alert variant="error">Você não possui acesso ao dashboard.</Alert>
+          )}
+          {noAccess === 'virtual-machine' && (
+            <Alert variant="error">Você não possui acesso à máquina virtual.</Alert>
+          )}
         </div>
       </section>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
