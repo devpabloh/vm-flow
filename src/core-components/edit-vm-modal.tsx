@@ -278,7 +278,7 @@ export function EditVmModal({ vm, availableVms = [], onClose, onSave }: EditVmMo
                   return (
                     <div
                       key={service.id || index}
-                      className="p-3.5 rounded-xl border border-border-default bg-background-primary/60 dark:bg-white/[0.02] space-y-3 transition-all hover:border-border-default/80"
+                      className="p-3.5 rounded-xl border border-border-default bg-background-primary/60 dark:bg-white/2 space-y-3 transition-all hover:border-border-default/80"
                     >
                       <div className="flex items-center justify-between gap-3">
                         <div className="flex items-center gap-2 flex-1">
